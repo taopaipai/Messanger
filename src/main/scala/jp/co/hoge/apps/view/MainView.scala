@@ -4,7 +4,7 @@ import scala.beans.BeanProperty
 import javax.swing.{ JFrame, JTextArea, JButton, JScrollPane, JPanel }
 import java.awt.{ Dimension, Container, BorderLayout }
 import jp.co.hoge.apps.view.helper.UserList
-import jp.co.hoge.apps.view.helper.{ SendButton, NameTextField }
+import jp.co.hoge.apps.view.helper.{ SendButton, NameTextField, PortTextField }
 import jp.co.hoge.apps.DependencyInjection
 
 class MainView extends View("IP Messager for Scala + Akka + Swing") {
@@ -13,6 +13,7 @@ class MainView extends View("IP Messager for Scala + Akka + Swing") {
   @BeanProperty var message : JTextArea = new JTextArea
   @BeanProperty var sendButton : SendButton = new SendButton
   @BeanProperty var myName : NameTextField = new NameTextField("anounymous")
+  @BeanProperty var port : PortTextField = new PortTextField("2552") 
 
   var panelForArea : JPanel = new JPanel
   var panelForBtn  : JPanel = new JPanel 
@@ -28,6 +29,7 @@ class MainView extends View("IP Messager for Scala + Akka + Swing") {
   scroll4UserList.setPreferredSize(new Dimension(250, 50))
 
   panelForArea.add(myName)
+  panelForArea.add(port)
   panelForArea.add(scroll4UserList)
   panelForArea.add(scroll4Message)
   

@@ -6,6 +6,7 @@ import jp.co.hoge.apps.DependencyInjection
 import java.net._
 import jp.co.hoge.apps.model.MessageModel
 import jp.co.hoge.apps.model.bean.Message
+import jp.co.hoge.apps.model.bean.User
 import jp.co.hoge.apps.view.listener.{ ViewWindowEventListener, ViewEventListener }
 
 class MainController extends Controller(Array()) {
@@ -17,11 +18,11 @@ class MainController extends Controller(Array()) {
       new ViewEventListener(
         (event : java.awt.event.ActionEvent) => {
           // TODO : UNCODE...
-          for (selected <- DependencyInjection.mainView.getUserList.getSelectedValues) {
-            var tmp = selected.toString.split(" -> ")
-            model.send(new Message(InetAddress.getByName(tmp(0).replace("Map(", "").replace("/", "")), DependencyInjection.mainView.getMessage.getText, DependencyInjection.selfModel.port, DependencyInjection.mainView.getMyName.getText))
-            DependencyInjection.mainView.getMessage.setText("")
+          for (selected <- DependencyInjection.mainView.getUserList.getSelectedValuesList.toArray) {
+            var user = selected.asInstanceOf[User]
+            model.send(new Message(DependencyInjection.mainView.getMessage.getText, user))
           }
+          DependencyInjection.mainView.getMessage.setText("")
         }
       )
     )

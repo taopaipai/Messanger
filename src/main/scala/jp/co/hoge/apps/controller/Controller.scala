@@ -11,7 +11,7 @@ import java.io._
 /**
  * Controller
  */
-abstract class Controller(var args: Array[String]) extends Actor {
+abstract class Controller(var args: Array[AnyRef]) extends Actor {
   import context._
 
   final val ERROR_LEVEL_NOMAL                = 0
@@ -48,9 +48,13 @@ abstract class Controller(var args: Array[String]) extends Actor {
   }
 
   def killProc {
+    println("killProc Start")
     context.system.shutdown
-    Thread.sleep(3000)
-    System.exit(errorLevel)
+    println("Sleep")
+    Thread.sleep(30000)
+    println("Wakeup")
+    System.exit(0)
+    println("killProc End")
   }
 
   def setUp

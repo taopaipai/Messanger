@@ -13,6 +13,5 @@ object MainApp extends App {
   ctrl ! "exec"
   system.scheduler.schedule(0 second, 0 second, receiver, "exec")
   system.scheduler.schedule(0 second, 5 second, greeting, "exec")
-//  val view = new jp.co.hoge.view.MainView
 }
 

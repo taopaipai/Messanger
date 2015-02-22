@@ -7,6 +7,7 @@ import java.io.ObjectOutputStream
 import java.io.ByteArrayInputStream
 import java.io.ObjectInputStream
 import jp.co.hoge.apps.model.bean.Message
+import jp.co.hoge.apps.model.bean.User
 import jp.co.hoge.apps.model.listener.MessageEventListener
 import jp.co.hoge.apps.DependencyInjection
 
@@ -30,7 +31,7 @@ class MessageModel {
       using(new ObjectOutputStream(baos)) { oos =>
         oos.writeObject(message)
         using(new DatagramSocket) { socket =>
-          var packet  = new DatagramPacket(baos.toByteArray, baos.toByteArray.length, message.getInetAddress, message.getPort)
+          var packet  = new DatagramPacket(baos.toByteArray, baos.toByteArray.length, message.getTo.getInetAddress, message.getTo.getPort)
           socket.send(packet)
         }
       }
@@ -39,14 +40,12 @@ class MessageModel {
 
   def receive : Message = {
     var packet : DatagramPacket = new DatagramPacket(new Array[Byte](SIZE_MAX_PACKET), SIZE_MAX_PACKET)
-    using(new DatagramSocket(DependencyInjection.selfModel.port)) { socket => 
+    using(new DatagramSocket(DependencyInjection.mainView.getPort.getText.toInt)) { socket => 
       socket.receive(packet)
     }
     using(new ByteArrayInputStream(packet.getData)) { bais => 
       using(new ObjectInputStream(bais)) { ois => 
-        var message = ois.readObject.asInstanceOf[Message]
-        message.setInetAddress(packet.getAddress)
-        message
+        ois.readObject.asInstanceOf[Message]
       }
     }
   }
