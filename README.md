@@ -1,5 +1,7 @@
 
-### Scala Cookbook
+### IP Messanger for Scala + Akka + Swing
 
-Tutorial for learning Scala programming language. This project contains the sample code used in the official web site: http://xerial.org/scala-cookbook
-
+Scalaの勉強用にIP Messangerを作ってみた
+ブロードキャストにパケット投げるので、制限あるとこでは使えないです。
+ControllerにAkka、ViewにSwing使ってます。
+今後メッセージ送受信もAkka Remoteに変更する予定
